@@ -3,10 +3,10 @@ import Database from "../database/conexion.js";
 const db = await Database.getInstance();
 
 /* OBTENER TODOS LOS REGISTROS */
-export const getAmbientes = async (req, res) => {
+export const getDocentes = async (req, res) => {
   try {
     const [result] = await db.pool.query(
-      "SELECT * FROM ambiente ORDER BY id_ambiente ASC"
+      "SELECT * FROM docente ORDER BY id_docente ASC"
     );
     res.json(result);
   } catch (error) {
@@ -15,14 +15,14 @@ export const getAmbientes = async (req, res) => {
 };
 
 /* OBTENER UN REGISTRO */
-export const getAmbiente = async (req, res) => {
+export const getDocente = async (req, res) => {
   try {
     const [result] = await db.pool.query(
-      "SELECT * FROM ambiente WHERE id_ambiente = ?",
+      "SELECT * FROM docente WHERE id_docente = ?",
       [req.params.id]
     );
     if (result.length === 0) {
-      return res.status(404).json({ message: "Ambiente no encontrado" });
+      return res.status(404).json({ message: "Docente no encontrado" });
     }
     console.log(result);
     res.json(result[0]);
@@ -32,34 +32,39 @@ export const getAmbiente = async (req, res) => {
 };
 
 /* CREAR REGISTRO */
-export const createAmbiente = async (req, res) => {
+export const createDocente = async (req, res) => {
   try {
     const {
-      codigo_ambiente,
-      nombre_ambiente,
-      tipo_ambiente,
-      capacidad_ambiente,
-      ubicacion_ambiente,
+      nombre_docente,
+      apellido_docente,
+      tipo_identificacion_docente,
+      identificacion_docente,
+      tipo_docente,
+      tipo_contrato_docente,
+      area_docente,
     } = req.body; //valores del body del request
     // query SQL
     const [result] = await db.pool.query(
-      "INSERT INTO ambiente(codigo_ambiente, nombre_ambiente, tipo_ambiente, capacidad_ambiente, ubicacion_ambiente) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO docente(nombre_docente, apellido_docente, tipo_identificacion_docente, identificacion_docente, tipo_docente, tipo_contrato_docente, area_docente) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
-        codigo_ambiente,
-        nombre_ambiente,
-        tipo_ambiente,
-        capacidad_ambiente,
-        ubicacion_ambiente,
+        nombre_docente,
+        apellido_docente,
+        tipo_identificacion_docente,
+        identificacion_docente,
+        tipo_docente,
+        tipo_contrato_docente,
+        area_docente,
       ]
     );
     // respuesta de la peticion en formato json
     res.json({
       id: result.insertId,
-      codigo_ambiente,
-      nombre_ambiente,
-      tipo_ambiente,
-      capacidad_ambiente,
-      ubicacion_ambiente,
+      nombre_docente,
+      apellido_docente,
+      tipo_identificacion_docente,
+      tipo_docente,
+      tipo_contrato_docente,
+      area_docente,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -67,11 +72,11 @@ export const createAmbiente = async (req, res) => {
 };
 
 /* ACTUALIZAR UN REGISTRO */
-export const updateAmbiente = async (req, res) => {
+export const updateDocente = async (req, res) => {
   try {
     // query SQL
     const [result] = await db.pool.query(
-      "UPDATE ambiente SET ? WHERE id_ambiente = ?",
+      "UPDATE docente SET ? WHERE id_docente = ?",
       [req.body, req.params.id]
     );
     res.json(result);
@@ -81,19 +86,17 @@ export const updateAmbiente = async (req, res) => {
 };
 
 /* ELIMINAR UN REGISTRO */
-export const deleteAmbiente = async (req, res) => {
+export const deleteDocente = async (req, res) => {
   try {
     const [result] = await db.pool.query(
-      "DELETE FROM ambiente WHERE id_ambiente = ?",
+      "DELETE FROM docente WHERE id_docente = ?",
       [req.params.id]
     );
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "Ambiente no encontrado" });
+      return res.status(404).json({ message: "Docente no encontrado" });
     }
     return res.sendStatus(204);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
-
-//linea comentada
