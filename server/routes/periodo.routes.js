@@ -1,29 +1,24 @@
 import { Router } from "express";
-import {
-  createPeriodo,
-  deletePeriodo,
-  getPeriodo,
-  getPeriodos,
-  updatePeriodo,
-} from "../controllers/periodo.controller.js";
+import Periodo from "../controllers/periodo.controller.js";
 
+const periodo = new Periodo();
 const router = Router();
 
 /*METODOS CRUD*/
 
 // obtener todos los registros
-router.get("/periodos", getPeriodos);
+router.get("/periodos", periodo.getPeriodos);
 
 // obtener un registro
-router.get("/periodos/:id", getPeriodo);
+router.get("/periodos/:id", periodo.getPeriodo);
 
 // crear registro
-router.post("/periodos", createPeriodo);
+router.post("/periodos", periodo.createPeriodo);
 
 // actualizar registro
-router.put("/periodos/:id", updatePeriodo);
+router.put("/periodos/:id", periodo.updatePeriodo);
 
 // eliminar registro
-router.delete("/periodos/:id", deletePeriodo);
+router.delete("/periodos/:id", periodo.deletePeriodo);
 
 export default router;
