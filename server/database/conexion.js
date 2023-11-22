@@ -32,7 +32,7 @@ class Database {
 // PRUEBA SINGLETON
 // const db = await Database.getInstance();
 // const db1 = await Database.getInstance();
-//console.log(db === db1);
+// console.log(db === db1);
 
 // CONEXION VIEJA
 // const DbConexion = createPool({
